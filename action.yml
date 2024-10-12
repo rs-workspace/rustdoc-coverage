@@ -1,0 +1,25 @@
+name: 'rs-workspace/rustdoc-coverage'
+description: 'GitHub actions for running rustdoc coverage'
+author: 'Aditya Kumar'
+
+# Add your action's branding here. This will appear on the GitHub Marketplace.
+branding:
+  icon: 'file-text'
+  color: 'green'
+
+# Define your inputs here.
+inputs:
+  features:
+    description: 'Cargo Features'
+    default: 'all'
+  toolchain:
+    description: 'Rust Toolchain to be used'
+  target:
+    description: 'Cargo rustdoc targets'
+    default: 'all-targets'
+  build_target:
+    description: 'The architecture to be used by rustdoc'
+
+runs:
+  using: node20
+  main: dist/index.js

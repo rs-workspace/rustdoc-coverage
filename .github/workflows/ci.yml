@@ -55,7 +55,7 @@ jobs:
 
       - name: Install Rust Toolchain
         id: install-rust
-        uses: rs-workspace/rust-toolchain
+        uses: rs-workspace/rust-toolchain@v0.2.0
         with:
           toolchain: nightly
 

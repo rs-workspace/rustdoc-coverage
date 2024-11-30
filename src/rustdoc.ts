@@ -20,7 +20,7 @@ export async function rustdoc_coverage(
       }
     }
 
-    const args = [properties.toolchain, 'rustdoc']
+    const args = [`+${properties.toolchain}`, 'rustdoc']
     properties.targets.forEach(target => {
       args.push(`--${target}`)
     })

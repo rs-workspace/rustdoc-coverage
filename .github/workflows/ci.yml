@@ -53,17 +53,23 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
 
+      - name: Install Rust Toolchain
+        id: install-rust
+        uses: rs-workspace/rust-toolchain
+        with:
+          toolchain: nightly
+
+      - name: Checkout Bevy Discord
+        id: bevy-discord
+        run: |
+          git clone https://github.com/as1100k/bevy-discord.git
+          cd bevy-discord
+
       - name: Test Local Action
         id: test-action
         uses: ./
         with:
-          toolchain: nightly
-          profile: minimal
-          components: miri
-
-      # TODO: Update the GitHub Action to test the actual action
-      - name: Test miri --help
-        run: cargo miri --help
+          targets: lib
 
       - name: Print Output
         id: output

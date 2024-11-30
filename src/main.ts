@@ -1,6 +1,8 @@
 import * as core from '@actions/core'
+import { exec } from '@actions/exec'
 import { Properties } from './types'
 import { rustdoc_coverage } from './rustdoc'
+import { delay } from './utils'
 
 /**
  * The main function for the action.
@@ -12,6 +14,7 @@ export async function run(): Promise<void> {
     const toolchain = core.getInput('toolchain', { required: true })
     const targets = core.getInput('targets')
     const build_target = core.getInput('build_target')
+    const working_directory = core.getInput('working_directory')
 
     const properties = new Properties(
       features,
@@ -19,6 +22,11 @@ export async function run(): Promise<void> {
       targets.split(' '),
       build_target
     )
+
+    if (working_directory !== '') {
+      await delay(1000)
+      await exec(`cd ${working_directory}`)
+    }
 
     await rustdoc_coverage(properties)
   } catch (error) {

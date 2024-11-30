@@ -20,6 +20,8 @@ inputs:
     default: 'all-targets'
   build_target:
     description: 'The architecture to be used by rustdoc'
+  working_directory:
+    description: 'Working directory for this GitHub Action'
 
 runs:
   using: node20

@@ -25667,8 +25667,10 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = run;
 const core = __importStar(__nccwpck_require__(7484));
+const exec_1 = __nccwpck_require__(5236);
 const types_1 = __nccwpck_require__(8522);
 const rustdoc_1 = __nccwpck_require__(1655);
+const utils_1 = __nccwpck_require__(1798);
 /**
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
@@ -25679,7 +25681,12 @@ async function run() {
         const toolchain = core.getInput('toolchain', { required: true });
         const targets = core.getInput('targets');
         const build_target = core.getInput('build_target');
+        const working_directory = core.getInput('working_directory');
         const properties = new types_1.Properties(features, toolchain, targets.split(' '), build_target);
+        if (working_directory !== '') {
+            await (0, utils_1.delay)(1000);
+            await (0, exec_1.exec)(`cd ${working_directory}`);
+        }
         await (0, rustdoc_1.rustdoc_coverage)(properties);
     }
     catch (error) {
@@ -25753,7 +25760,10 @@ async function rustdoc_coverage(properties) {
         properties.targets.forEach(target => {
             args.push(`--${target}`);
         });
-        if (properties.features.length > 0) {
+        if (properties.features[0] === 'all') {
+            args.push('--all-features');
+        }
+        else if (properties.features.length > 0) {
             args.push('--features');
             args.push(...properties.features);
         }
@@ -25809,6 +25819,28 @@ const allowed_build = [
     'benches',
     'all-target'
 ];
+
+
+/***/ }),
+
+/***/ 1798:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.delay = delay;
+/**
+ * Sleeps for the said amount of time (in ms)
+ *
+ * @export
+ * @async
+ * @param {number} ms Time in milliseconds for the delay
+ * @returns {void}
+ */
+async function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 
 /***/ }),

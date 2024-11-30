@@ -25,7 +25,9 @@ export async function rustdoc_coverage(
       args.push(`--${target}`)
     })
 
-    if (properties.features.length > 0) {
+    if (properties.features[0] === 'all') {
+      args.push('--all-features')
+    } else if (properties.features.length > 0) {
       args.push('--features')
       args.push(...properties.features)
     }

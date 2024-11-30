@@ -14,7 +14,8 @@ inputs:
     default: 'all'
   toolchain:
     description: 'Rust Toolchain to be used'
-  target:
+    default: 'nightly'
+  targets:
     description: 'Cargo rustdoc targets'
     default: 'all-targets'
   build_target:

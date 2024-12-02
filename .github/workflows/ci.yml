@@ -60,7 +60,7 @@ jobs:
           toolchain: nightly
 
       - name: Clone Bevy Discord
-        uses: GuillaumeFalourd/clone-github-repo-action@v2.3
+        uses: GuillaumeFalourd/clone-github-repo-action@v3
         with:
           depth: 1
           branch: 'main'
